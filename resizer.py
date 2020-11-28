@@ -2,7 +2,7 @@ from tkinter import filedialog
 from tkinter import messagebox
 from tkinter.filedialog import askopenfilename
 from tkinter import *
-import os,os.path
+import os,os.path, sys
 from PIL import Image
 from threading import Thread
 
@@ -36,7 +36,15 @@ def bfolder():
 
 def ofolder():
     window.update()
-    os.startfile("resized")
+    # os.startfile("resized")
+
+    if sys.platform == "win32":
+        os.startfile("resized")
+    else:
+        import subprocess
+
+        opener = "open" if sys.platform == "darwin" else "xdg-open"
+        subprocess.call([opener, "resized"])
     
 def successful():
     messagebox.showinfo(" Confirmation Box "," Your Task is Complete ")
